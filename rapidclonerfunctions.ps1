@@ -156,25 +156,43 @@ function new-rapidclone {
 		#read-host "Continue?"
 	}
 	write-host "Built" $newvms.length "clones from $clonebasis.name"
+	return $newvms
 }
 
+function spawn-rapidclone {
+	param
+		(
+			$json
+		)
+
+	$content = get-content $json
+	$outstring = $content | out-string
+	$newjson = $outstring | convertfrom-json
+	$basevm = $newjson.basevm
+	$computeresourcename = $newjson.computerresourcename
+	$portgroupname = $newjson.portgroupname
+	$datastorename = $newjson.datastorename
+	$foldername = $foldername
+	$basename = $newjson.basename
+	$domain = $newjson.domain
+	$clonecount = $newjson.clonecount
+
+	$vms = new-rapidclone  -basevm $basevm -computeresourcename $computeresourcename -portgroupname $portgroupname -datastorename $datastorename -foldername $foldername -basename $basename -domain $domain -clonecount $clonecount
+	return $vms
+}
 
 function testfunction-master {
 
 	$basevm = "turnkey-core-15.0-stretch-amd64"
-	$computeresourcename = "rapid-clones"
-	$portgroupname = "vlan-0-192.168.0.1-24"
+	$computeresourcename = "tester-resourcepool"
+	$portgroupname = "l3-vlan-net-192.168.100.1_24"
 	$datastorename = "freenas-datastore"
-	$foldername = "rapid-clones"
+	$foldername = "tester"
 	#$credentials = get-credential
-	$basename = "labvmb"
-	$domain = "lab.lan"
-	#$ipstart = "192.168.1.200"
-	#$ipend = "192.168.1.220"
-	$clonecount = 1
-	#new-rapidclone  -basevm $basevm -computeresourcename $computeresourcename -portgroupname $portgroupname -datastorename $datastorename -foldername $foldername -credentials $credentials -basename $basename -domain $domain -ipstart $ipstart -ipend $ipend -clonecount $clonecount
-	
+	$basename = "dockerworker"
+	$domain = "dom.lan"
+	#$ipstart = "192.168.100.200"
+	#$ipend = "192.168.100.220"
+	$clonecount = 20
 	new-rapidclone  -basevm $basevm -computeresourcename $computeresourcename -portgroupname $portgroupname -datastorename $datastorename -foldername $foldername -basename $basename -domain $domain -clonecount $clonecount
-	
-
 }

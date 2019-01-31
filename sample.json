@@ -1,0 +1,10 @@
+{
+    "computeresourcename":  "tester-resourcepool",
+    "clonecount":  "20",
+    "datastorename":  "freenas-datastore",
+    "portgroupname":  "l3-vlan-net-192.168.100.1_24",
+    "basevm":  "turnkey-core-15.0-stretch-amd64",
+    "domain":  "dom.lan",
+    "foldername":  "tester",
+    "basename":  "dockerworker"
+}
